@@ -4,6 +4,10 @@ import log from "./logger.js";
 import helmet from "helmet";
 import morgan from "morgan"
 import 'dotenv/config'
+import Debug from 'debug'
+
+const startupDebugger = Debug('app:startup')
+//const dbDebugger = Debug('app:db')
 
 const app = express();
 
@@ -20,8 +24,11 @@ console.log("Mail Password: " + process.env.MAIL_PASSWORD)
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'))
-    console.log('Morgan enabled')
+    startupDebugger('Morgan enabled')
 }
+
+// DB Work
+//dbDebugger('Connected to database...')
 
 const courses = [
     {id: 1, name: 'Course1'},
