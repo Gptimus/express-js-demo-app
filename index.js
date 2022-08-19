@@ -11,6 +11,9 @@ const startupDebugger = Debug('app:startup')
 
 const app = express();
 
+app.set('view engine', 'pug')
+app.set('views', './views') // default
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
@@ -22,7 +25,7 @@ console.log("Application name: " + process.env.NAME)
 console.log("Mail server: " + process.env.MAIL_HOST)
 console.log("Mail Password: " + process.env.MAIL_PASSWORD)
 
-if (app.get('env') === 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan('tiny'))
     startupDebugger('Morgan enabled')
 }
@@ -38,7 +41,10 @@ const courses = [
 ]
 
 app.get("/", (req, res) => {
-    res.send("Hello, world!");
+    res.render('index', {
+        title: "My Express Application",
+        message: "Hello World"
+    });
 });
 
 app.get("/api/courses", (req, res) => {
