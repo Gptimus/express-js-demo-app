@@ -1,5 +1,5 @@
 import express from "express";
-import log from "./logger.js";
+import log from "./middleware/logger.js";
 import helmet from "helmet";
 import morgan from "morgan"
 import 'dotenv/config'
