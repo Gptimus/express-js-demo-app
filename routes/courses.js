@@ -1,18 +1,6 @@
 import express from 'express';
-import Joi from "joi";
-import mongoose from "mongoose";
-
+import {Course, validateCourse} from "../models/Course.js";
 const router = express.Router()
-
-const Course = mongoose.model('Course', new mongoose.Schema({
-    name: {
-        type: 'string',
-        required: true,
-        minLength: 5,
-        maxLength: 50
-    }
-}))
-
 
 router.get("/", async (req, res) => {
     const courses = await Course.find().sort('name')
@@ -61,19 +49,5 @@ router.get("/:id", async (req, res) => {
     if (!course) return res.status(404).send(`The course with id ${req.params.id} was not found`);
     res.send(course)
 })
-
-function validateCourse(course) {
-    const schema = Joi.object({
-        name: Joi.string().min(3).required(),
-    })
-
-    const {error, value, warning} = schema.validate(course)
-
-    return {
-        error,
-        value,
-        warning
-    }
-}
 
 export default router
