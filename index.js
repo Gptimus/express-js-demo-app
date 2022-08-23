@@ -7,6 +7,7 @@ import Debug from 'debug'
 import mongoose from "mongoose";
 
 import courseRoutes from "./routes/courses.js";
+import customerRoutes from "./routes/customers.js";
 
 const startupDebugger = Debug('app:startup')
 //const dbDebugger = Debug('app:db')
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
 
 // Courses Routes middleware
 app.use('/api/courses', courseRoutes)
+app.use('/api/customers', customerRoutes)
 
 
 // Port
