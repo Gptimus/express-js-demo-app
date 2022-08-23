@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan"
 import 'dotenv/config'
 import Debug from 'debug'
+import mongoose from "mongoose";
 
 import courseRoutes from "./routes/courses.js";
 
@@ -32,7 +33,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // DB Work
-//dbDebugger('Connected to database...')
+mongoose
+    .connect('mongodb://localhost/vidly')
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(() => console.log('Failed to connect to MongoDB...'))
 
 app.get("/", (req, res) => {
     res.render('index', {
